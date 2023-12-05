@@ -1,28 +1,45 @@
+// --------------------------------------------------------------------- getResultado
+function getResultado(hh, mm) {
+	const totalMinutos = (hh*60) + mm;
+	
+	let horaDecimal = totalMinutos/60;
+	horaDecimal = horaDecimal.toFixed(2);
+	
+	if(hh < 10) hh = `0${hh}`;
+	if(mm < 10) mm = `0${mm}`;
+	
+	let msg = `Total Horas:\t\t${hh}:${mm}h\n`;
+	msg += `Total Minutos:\t\t${totalMinutos}min\n`;
+	msg += `Total Fração:\t\t${horaDecimal.replace('.', ',')}h`;
+	
+	return msg;
+}
+
 // --------------------------------------------------------------------- Calcular horas
-const elInputHorasInicio = document.getElementById('horas_inicio');
-const elInputHorasFim = document.getElementById('horas_fim');
-const btnCalcularHoras = document.getElementById("btn_calcular_horas");
-const elResultadoHoras = document.getElementById("resultado_horas_calculadas");
+const elInHorasInicio = document.getElementById('in_horas_inicio');
+const elInHorasFim = document.getElementById('in_horas_fim');
+const elResultHoras = document.getElementById("result_diferenca_horas");
+const btnCalcHoras = document.getElementById("btn_calc_diferenca_horas");
 
 // --------------------------------------------------------------------- evento focus inicio
-elInputHorasInicio.addEventListener('keypress', (ev)=> {
+elInHorasInicio.addEventListener('keypress', (ev)=> {
 	if(ev.key === "Enter") {
-		elInputHorasFim.focus();
+		elInHorasFim.focus();
 	}
 });
 
 // --------------------------------------------------------------------- evento focus fim
-elInputHorasFim.addEventListener('keypress', (ev)=> {
+elInHorasFim.addEventListener('keypress', (ev)=> {
 	if(ev.key === "Enter") {
-		btnCalcularHoras.focus();
-		btnCalcularHoras.click();
+		btnCalcHoras.focus();
+		btnCalcHoras.click();
 	}
 });
 
 // --------------------------------------------------------------------- funcao do btn calcular horas
-btnCalcularHoras.addEventListener("click", ()=> {
-	const valHorasInicio = elInputHorasInicio.value;
-	const valHorasFim = elInputHorasFim.value;
+btnCalcHoras.addEventListener("click", ()=> {
+	const valHorasInicio = elInHorasInicio.value;
+	const valHorasFim = elInHorasFim.value;
 	
 	const dataInicio = new Date('1970-01-01T' + valHorasInicio + 'Z');
 	const dataFim = new Date('1970-01-01T' + valHorasFim + 'Z');
@@ -34,155 +51,110 @@ btnCalcularHoras.addEventListener("click", ()=> {
 	
 	const diferencaEmMilissegundos = dataFim - dataInicio;
 	
-	let horas = Math.floor(diferencaEmMilissegundos / 3600000);
-	let minutos = Math.floor((diferencaEmMilissegundos % 3600000) / 60000);
+	const horas = Math.floor(diferencaEmMilissegundos / 3600000);
+	const minutos = Math.floor((diferencaEmMilissegundos % 3600000) / 60000);
 	
-	const totalMinutos = (horas*60) + minutos;
-	
-	if(horas < 10) horas = `0${horas}`;
-	if(minutos < 10) minutos = `0${minutos}`;
-	
-	let msgResultado = `Total Horas:\t\t${horas}:${minutos}h\n`;
-	msgResultado += `Total Minutos:\t\t${totalMinutos}min\n`;
-	
-	let fracao = totalMinutos/60;
-	fracao = fracao.toFixed(2);
-	fracao = fracao.replace('.', ',');
-	
-	msgResultado += `Total Fração:\t\t${fracao}h`;
-	
-	elResultadoHoras.textContent = msgResultado;
+	elResultHoras.textContent = getResultado(horas, minutos);
 });
 
-// --------------------------------------------------------------------- Calcular fração
-const elInputHorasFracao = document.getElementById('horas_fracao');
-const btnCalcularFracao = document.getElementById("btn_calcular_fracao");
-const elResultadoFracao = document.getElementById('resultado_fracoes_calculadas');
 
-// --------------------------------------------------------------------- event focus input fracao
-elInputHorasFracao.addEventListener('keypress', (ev)=> {
+// --------------------------------------------------------------------- Calcular decimal
+const elInHorasDecimal = document.getElementById('in_horas_decimal');
+const btnCalcDecimal = document.getElementById("btn_calc_decimal");
+const elResultDecimal = document.getElementById('result_horas_decimal');
+
+// --------------------------------------------------------------------- event focus input decimal
+elInHorasDecimal.addEventListener('keypress', (ev)=> {
 	if(ev.key === "Enter") {
-		btnCalcularFracao.focus();
-		btnCalcularFracao.click();
+		btnCalcDecimal.focus();
+		btnCalcDecimal.click();
 	}
 });
 
-// --------------------------------------------------------------------- funcao btn calcular fraçao
-btnCalcularFracao.addEventListener('click', ()=> {
-	let valFracao = elInputHorasFracao.value;
+// --------------------------------------------------------------------- funcao btn calcular decimal
+btnCalcDecimal.addEventListener('click', ()=> {
+	let valDecimal = elInHorasDecimal.value;
 	
-	valFracao = valFracao ? valFracao : 0;
-	
-	let horas = Math.floor(valFracao);
-	let minutos = Math.round((valFracao - horas) * 100);
+	const horas = Math.floor(valDecimal);
+	let minutos = Math.round((valDecimal - horas)*100);
 	minutos = Math.floor((60/100) * minutos);				// regra de 3
 	
-	const totalMinutos = (horas * 60) + minutos;
-	
-	if(horas < 10) horas = `0${horas}`;
-	if(minutos < 10) minutos = `0${minutos}`;
-	
-	valFracao = parseFloat(valFracao);
-	valFracao = valFracao.toFixed(2);
-	valFracao = valFracao.replace('.', ',');
-	
-	let msgResultado = `Total Horas:\t\t${horas}:${minutos}h\n`;
-	msgResultado += `Total Minutos:\t\t${totalMinutos}min\n`;
-	msgResultado += `Total Fração:\t\t${valFracao}h`;
-	
-	elResultadoFracao.textContent = msgResultado;
+	elResultDecimal.textContent = getResultado(horas, minutos);
 });
 
+
 // --------------------------------------------------------------------- Calcular minutos
-const elInputMinutos = document.getElementById('in_minutos');
-const btnCalcularMinutos = document.getElementById('btn_calcular_minutos');
-const elResultadoMinutos = document.getElementById('resultado_minutos');
+const elInMinutos = document.getElementById('in_minutos');
+const btnCalcMinutos = document.getElementById('btn_calc_minutos');
+const elResultMinutos = document.getElementById('result_minutos');
 
 // --------------------------------------------------------------------- evento focus in minutos
-elInputMinutos.addEventListener('keypress', (ev)=> {
+elInMinutos.addEventListener('keypress', (ev)=> {
 	if(ev.key === "Enter") {
-		btnCalcularMinutos.focus();
-		btnCalcularMinutos.click();
+		btnCalcMinutos.focus();
+		btnCalcMinutos.click();
 	}
 });
 
 // --------------------------------------------------------------------- funcao btn calcular minutos
-btnCalcularMinutos.addEventListener('click', ()=> {
-	const valMinutos = elInputMinutos.value;
+btnCalcMinutos.addEventListener('click', ()=> {
+	const totalMinutos = elInMinutos.value;
 	
-	let fracao = valMinutos/60;
-	let horas = Math.floor(fracao);
-	let minutos = valMinutos - horas*60;
+	const horas = Math.floor(totalMinutos/60);
+	const minutos = totalMinutos - (horas*60);
 	
-	if(horas < 10) horas = `0${horas}`;
-	if(minutos < 10) minutos = `0${minutos}`;
-	
-	fracao = fracao.toFixed(2);
-	fracao = fracao.replace('.', ',');
-	
-	let msgResultado = `Total Horas:\t\t${horas}:${minutos}h\n`;
-	msgResultado += `Total Minutos:\t\t${valMinutos ? valMinutos : 0}min\n`;
-	msgResultado += `Total Fração:\t\t${fracao}h`;
-	
-	elResultadoMinutos.textContent = msgResultado;
+	elResultMinutos.textContent = getResultado(horas, minutos);
 });
 
-// --------------------------------------------------------------------- Calcular regra de 3
-const elInputRegraA = document.getElementById('in_regra_a');
-const elInputRegraB = document.getElementById('in_regra_b');
-const elInputRegraC = document.getElementById('in_regra_c');
-const elInputRegraX = document.getElementById('in_regra_x');
-const btnCalcularRegra = document.getElementById('btn_calcular_regra_tres');
+// --------------------------------------------------------------------- Calcular valor para horas
+const elInValorHoras = document.getElementById('in_valor_hora');
+const elInValorAConverter = document.getElementById('in_valor_converter');
+const elResultValorHora = document.getElementById('result_valor_hora');
+const btnCalcValorHora = document.getElementById('btn_calc_valor_hora');
 
-// --------------------------------------------------------------------- evento focus in A
-elInputRegraA.addEventListener('keypress', (ev)=> {
+// --------------------------------------------------------------------- evento valor hora
+elInValorHoras.addEventListener('keypress', (ev)=> {
 	if(ev.key === "Enter") {
-		elInputRegraB.focus();
+		elInValorAConverter.focus();
 	}
 });
 
-elInputRegraB.addEventListener('keypress', (ev)=> {
+// --------------------------------------------------------------------- evento valor converter
+elInValorAConverter.addEventListener('keypress', (ev)=> {
 	if(ev.key === "Enter") {
-		elInputRegraC.focus();
+		btnCalcValorHora.focus();
+		btnCalcValorHora.click();
 	}
 });
 
-elInputRegraC.addEventListener('keypress', (ev)=> {
-	if(ev.key === "Enter") {
-		btnCalcularRegra.focus();
-		btnCalcularRegra.click();
-	}
-});
-
-// --------------------------------------------------------------------- funcao btn calcular regra de 3
-btnCalcularRegra.addEventListener('click', ()=> {
-	const valA = elInputRegraA.value;
-	const valB = elInputRegraB.value;
-	const valC = elInputRegraC.value;
+// --------------------------------------------------------------------- funcão do btn calcular valor hora
+btnCalcValorHora.addEventListener('click', ()=> {
+	let valorHora = elInValorHoras.value;
+	let valorAConverter = elInValorAConverter.value;
 	
-	if(!valA) {
-		alert("Preencha o campo A");
-		elInputRegraA.focus();
-		return;
-	}
-	if(!valB) {
-		alert("Preencha o campo B");
-		elInputRegraB.focus();
-		return;
-	}
-	if(!valC) {
-		alert("Preencha o campo C");
-		elInputRegraC.focus();
-		return;
+	if(!valorHora) valorHora = 0;
+	if(!valorAConverter) valorAConverter = 0;
+	
+	valorHora = parseFloat(valorHora).toFixed(2);
+	valorAConverter = parseFloat(valorAConverter).toFixed(2);
+	
+	let horaDecimal = 0;
+	
+	if(valorHora != 0) {
+		horaDecimal = valorAConverter/valorHora;
 	}
 	
-	const resultado = (valB*valC)/valA;
-	elInputRegraX.value = resultado;
+	const horas = Math.floor(horaDecimal);
+	let minutos = Math.round((horaDecimal - horas)*100);
+	minutos = Math.floor((60/100) * minutos);				// regra de 3
+	
+	elResultValorHora.textContent = getResultado(horas, minutos);
 });
 
 // --------------------------------------------------------------------- ContentLoaded
 document.addEventListener('DOMContentLoaded', ()=> {
-	btnCalcularHoras.click();
-	btnCalcularFracao.click();
-	btnCalcularMinutos.click();
+	btnCalcHoras.click();
+	btnCalcDecimal.click();
+	btnCalcMinutos.click();
+	btnCalcValorHora.click();
 });

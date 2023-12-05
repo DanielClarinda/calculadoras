@@ -9,89 +9,120 @@
 </head>
 
 <body>
-	<div class="row m-0 p-0">
-		<!-- Calcular Horas -->
-		<div class="border m-2 rounded-3 p-3" style="width: 400px;">
-			<h4 class="text-center">Total de Horas</h4>
-			
-			<div class="row">
-				<div class="col">
-					<label for="horas_inicio">Início</label>
-					<input id="horas_inicio" class="form-control" type="time" name="horas_inicio" value="00:00">
+	<div class="row m-0">
+		<!-- Diferença de Horas -->
+		<div class="col">
+			<div class="border p-3 rounded m-2" style="width: 400px;">
+				<h4 class="text-center bg-black p-2 rounded text-white">Diferença de Horas</h4>
+				
+				<div class="row">
+					<div class="col">
+						<label for="in_horas_inicio">Início</label>
+						<input id="in_horas_inicio" class="form-control" type="time" name="in_horas_inicio" value="00:00">
+					</div>
+					
+					<div class="col">
+						<label for="in_horas_fim">Fim</label>
+						<input id="in_horas_fim" class="form-control" type="time" name="in_horas_fim" value="00:00">
+					</div>	
 				</div>
 				
-				<div class="col">
-					<label for="horas_fim">Fim</label>
-					<input id="horas_fim" class="form-control" type="time" name="horas_fim" value="00:00">
-				</div>	
+				<textarea id="result_diferenca_horas" class="my-2 w-100" cols="30" rows="3" placeholder="Resultado" disabled></textarea>
+				
+				<button id="btn_calc_diferenca_horas" class="btn btn-primary d-block mx-auto">Calcular</button>
 			</div>
-			
-			<textarea id="resultado_horas_calculadas" class="d-block mx-auto my-2" cols="30" rows="3" placeholder="Resultado" disabled></textarea>
-			
-			<button id="btn_calcular_horas" class="btn btn-secondary d-block mx-auto">Calcular</button>
 		</div>
 		
-		<!-- Conversor Fração -->
-		<div class="border m-2 rounded-3 p-3" style="width: 400px;">
-			<h4 class="text-center">Conversor de Fração</h4>
-			
-			<label for="horas_fracao">Fração de Horas</label>
-			<input id="horas_fracao" class="form-control" type="number" name="horas_fracao" placeholder="0,00">
-			
-			<textarea id="resultado_fracoes_calculadas" class="d-block mx-auto my-2" cols="30" rows="3" placeholder="Resultado" disabled></textarea>
-			
-			<button id="btn_calcular_fracao" class="btn btn-secondary d-block mx-auto">Calcular</button>
+		<div class="col">
+			<!-- Decimal para horas -->
+			<div class="border p-3 rounded m-2" style="width: 400px;">
+				<h4 class="text-center bg-black p-2 rounded text-white">Decimal para Horas</h4>
+				
+				<label for="in_horas_decimal">Decimal</label>
+				<input id="in_horas_decimal" class="form-control" type="number" name="in_horas_decimal" placeholder="0,00">
+				
+				<textarea id="result_horas_decimal" class="my-2 w-100" cols="30" rows="3" placeholder="Resultado" disabled></textarea>
+				
+				<button id="btn_calc_decimal" class="btn btn-primary d-block mx-auto">Calcular</button>
+			</div>
 		</div>
 		
-		<!-- Conversor Minutos -->
-		<div class="border m-2 rounded-3 p-3" style="width: 400px;">
-			<h4 class="text-center">Conversor de Minutos</h4>
-			
-			<label for="in_minutos">Minutos</label>
-			<input id="in_minutos" class="form-control" type="number" name="in_minutos" placeholder="000">
-			
-			<textarea id="resultado_minutos" class="d-block mx-auto my-2" cols="30" rows="3" placeholder="Resultado" disabled></textarea>
-			
-			<button id="btn_calcular_minutos" class="btn btn-secondary d-block mx-auto">Calcular</button>
+		<div class="col">
+			<!-- Minutos para Horas -->
+			<div class="border p-3 rounded m-2" style="width: 400px;">
+				<h4 class="text-center bg-black p-2 rounded text-white">Minutos para Horas</h4>
+				
+				<label for="in_minutos">Minutos</label>
+				<input id="in_minutos" class="form-control" type="number" name="in_minutos" placeholder="000">
+				
+				<textarea id="result_minutos" class="my-2 w-100" cols="30" rows="3" placeholder="Resultado" disabled></textarea>
+				
+				<button id="btn_calc_minutos" class="btn btn-primary d-block mx-auto">Calcular</button>
+			</div>
 		</div>
 		
-		<!-- Regra de 3 -->
-		<div class="border m-2 rounded-3 p-3" style="width: 400px;">
-			<h4 class="text-center">Regra de 3</h4>
-			
-			<div class="row">
-				<div class="col">
-					<label for="in_regra_a">A</label>
-					<input id="in_regra_a" class="form-control" name="in_regra_a" type="number" placeholder="60min">
+		<div class="col">
+			<!-- Valor para Horas -->
+			<div class="border p-3 rounded m-2" style="width: 400px;">
+				<h4 class="text-center bg-black p-2 rounded text-white">Valor para Horas</h4>
+				
+				<div class="row">
+					<div class="col">
+						<label for="in_valor_hora">Valor Hora</label>
+						<input id="in_valor_hora" class="form-control" type="number" name="in_valor_hora" placeholder="R$50,00">
+					</div>
+					
+					<div class="col">
+						<label for="in_valor_converter">Valor a converter</label>
+						<input id="in_valor_converter" class="form-control" type="number" name="in_valor_converter" placeholder="R$3.621,50">
+					</div>
 				</div>
 				
-				<div class="col-3">
-					Esta para
-				</div>
+				<textarea id="result_valor_hora" class="my-2 w-100" cols="30" rows="3" placeholder="Resultado" disabled></textarea>
 				
-				<div class="col">
-					<label for="in_regra_b">B</label>
-					<input id="in_regra_b" class="form-control" name="in_regra_b" type="number" placeholder="1h">
-				</div>
+				<button id="btn_calc_valor_hora" class="btn btn-primary d-block mx-auto">Calcular</button>
 			</div>
-			
-			<div class="row">
-				<div class="col">
-					<label for="in_regra_c">C</label>
-					<input id="in_regra_c" class="form-control" name="in_regra_c" type="number" placeholder="45min">
+		</div>
+		
+		<div class="col d-none">
+			<!-- Regra de 3 -->
+			<div class="border p-3 rounded m-2" style="width: 400px;">
+				<h4 class="text-center bg-black p-2 rounded text-white">Regra de 3</h4>
+				
+				<div class="row">
+					<div class="col">
+						<label for="in_regra_a">A</label>
+						<input id="in_regra_a" class="form-control" name="in_regra_a" type="number" placeholder="60min">
+					</div>
+					
+					<div class="col-3">
+						Esta para
+					</div>
+					
+					<div class="col">
+						<label for="in_regra_b">B</label>
+						<input id="in_regra_b" class="form-control" name="in_regra_b" type="number" placeholder="1h">
+					</div>
 				</div>
 				
-				<div class="col-3">
-					Esta para
+				<div class="row">
+					<div class="col">
+						<label for="in_regra_c">C</label>
+						<input id="in_regra_c" class="form-control" name="in_regra_c" type="number" placeholder="45min">
+					</div>
+					
+					<div class="col-3">
+						Esta para
+					</div>
+					
+					<div class="col">
+						<label for="in_regra_x">X</label>
+						<input id="in_regra_x" class="form-control" name="in_regra_x" type="number" disabled placeholder="0,75h">
+					</div>
 				</div>
 				
-				<div class="col">
-					<label for="in_regra_x">X</label>
-					<input id="in_regra_x" class="form-control" name="in_regra_x" type="number" disabled placeholder="0,75h">
-				</div>
+				<button id="btn_calc_regra_tres" class="btn btn-primary d-block mx-auto">Calcular</button>
 			</div>
-			
-			<button id="btn_calcular_regra_tres" class="btn btn-secondary d-block mx-auto">Calcular</button>
 		</div>
 	</div>
 	
